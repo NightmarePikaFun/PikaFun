@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function (){
-
   const taskbar = document.querySelector("div.task-bar")
   const $printer = document.querySelector('.print')
   let incrButton = document.querySelectorAll('.incr')
   let decrButton = document.querySelectorAll('.decr')
   const $newDay =document.querySelector('.day')
+
   var addValueToScore = {
     startScore:100,
     oldScore:100,
@@ -12,7 +12,26 @@ document.addEventListener('DOMContentLoaded', function (){
     item: 0
   }
 
+  var selectItems = document.querySelectorAll('div.task-bar__task')
+  function select(){
+    if(selectItems.length-1>-1)
+    {
+      selectItems[selectItems.length-1].addEventListener("click",function (){
+        if(event.target.className == "task-bar__task" || event.target.className == "left-task-item") {
+          if(this.className == "task-bar__task selected")
+          {
+            this.classList.remove("selected");
+          }
+          else {
+            this.classList.add("selected");
+          }
+        }
+      })
+    }
+  }
+
   var deleteItems = document.querySelectorAll('.delete')
+
   function deleter() {
     if(deleteItems.length-1>-1) {
       deleteItems[deleteItems.length - 1].addEventListener("click", function () {
@@ -24,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function (){
       })
     }
   }
+
   var inActiveItem = document.querySelectorAll('.complete')
 
   function asEmpty(){
@@ -60,15 +80,20 @@ document.addEventListener('DOMContentLoaded', function (){
   }
 
   $newDay.addEventListener('click',function (){
-    let tasks = document.querySelectorAll("div.task-bar__task__checkbox-off__complete")
+    let tasks = document.querySelectorAll("div.task-bar__task")
     saveTask();
     let int = 0;
     let can = true;
     for(let i = 0; i <tasks.length;i++)
     {
-      can = false;
-      downScore();
-      tasks[i].parentNode.parentNode.parentNode.remove()
+      if(tasks[i].className == "task-bar__task") {
+        can = false;
+        downScore();
+        tasks[i].remove();
+      }
+      else{
+        tasks[i].classList.remove('selected');
+      }
     }
     if(document.querySelector('div.task-bar').parentNode.childNodes[3].classList.value == "container__start-day__show" || can) {
       int = 1;
@@ -117,7 +142,10 @@ document.addEventListener('DOMContentLoaded', function (){
     plus();
     decrButton = document.querySelectorAll('.decr');
     minus();
-    taskCount()
+    taskCount();
+    saveTask();
+    selectItems = document.querySelectorAll('div.task-bar__task')
+    select();
   })
 
   function allComplete(int){
@@ -237,12 +265,13 @@ document.addEventListener('DOMContentLoaded', function (){
   function getTask(){
     let getText = localStorage.getItem('text');
     let getState = localStorage.getItem('state');
-    var text = JSON.parse(getText).split(',');
-    var state = JSON.parse(getState).split(',');
+    var text = JSON.parse(getText).split('/');
+    var state = JSON.parse(getState).split('/');
     for(let i = 0;i<state.length-1;i++)
     {
       if(state[i]==0)
       {
+
         createTaskNotMarked(text[i]);
       }
       else
@@ -259,8 +288,10 @@ document.addEventListener('DOMContentLoaded', function (){
     let saveState = "";
     for(let i = 1; i<taskBar.length;i++)
     {
-      saveText +=taskBar[i].lastElementChild.lastElementChild.firstElementChild.textContent;
-      saveText+=",";
+      if(taskBar[i].className == 'task-bar__task' || taskBar[i].className == 'task-bar__task selected') {
+        saveText += taskBar[i].lastElementChild.lastElementChild.firstElementChild.textContent;
+        saveText += "/";
+      }
       if(taskBar[i].lastElementChild.firstElementChild.firstElementChild.className == "task-bar__task__checkbox-off complete incr")
       {
         saveState+='0'
@@ -269,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function (){
       {
         saveState+='1'
       }
-      saveState+=','
+      saveState+='/'
     }
     localStorage.setItem('text',JSON.stringify(saveText));
     localStorage.setItem('state',JSON.stringify(saveState));
@@ -309,6 +340,8 @@ document.addEventListener('DOMContentLoaded', function (){
     plus();
     decrButton = document.querySelectorAll('.decr');
     minus();
+    selectItems = document.querySelectorAll('div.task-bar__task')
+    select();
   }
 
   function  createTaskMarked(text)
@@ -345,6 +378,8 @@ document.addEventListener('DOMContentLoaded', function (){
     plus();
     decrButton = document.querySelectorAll('.decr');
     minus();
+    selectItems = document.querySelectorAll('div.task-bar__task')
+    select();
   }
 
   function taskCount()

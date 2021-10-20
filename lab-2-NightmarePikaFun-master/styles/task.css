@@ -11,12 +11,6 @@
     text-align: center;
 }
 
-.task-bar__task:hover{
-    border: 3px solid #364FFB;
-    box-sizing: border-box;
-    border-radius: 8px;
-}
-
 .task-bar__task:hover path{
     fill: #A5A5A5;
 }
@@ -32,6 +26,8 @@
     padding-bottom: 8px;
     cursor: pointer;
     width: 100%;
+    border: 3px solid white;
+    box-sizing: border-box;
 }
 
 .task-bar__task-left{
@@ -238,4 +234,10 @@
 
 .new-done{
     padding-bottom: 40px;
+}
+
+.selected{
+    border: 3px solid #364FFB;
+    box-sizing: border-box;
+    border-radius: 8px;
 }
