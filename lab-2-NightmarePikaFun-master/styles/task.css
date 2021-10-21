@@ -1,0 +1,245 @@
+.task-bar{
+    display: flex;
+    flex-direction: column;
+    margin-top:18px;
+    margin-left: 16px;
+    margin-right: 15px;
+    margin-bottom: 18px;
+    width: 85%;
+    overflow-y: auto;
+    padding: 1px;
+    text-align: center;
+}
+
+.task-bar__task:hover path{
+    fill: #A5A5A5;
+}
+
+.task-bar__task{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background: #F1F2F6;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    width: 100%;
+    border: 3px solid white;
+    box-sizing: border-box;
+}
+
+.task-bar__task-left{
+    display: flex;
+    flex-direction: row;
+}
+
+.text-under-gauge{
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    color: #000000;
+}
+
+.show{
+    height:0px;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.text-under-gauge__show{
+    height: 0;
+}
+
+.task-bar__task__box{
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+}
+
+.task-bar__task__checkbox-off{
+    width: 24px;
+    height: 24px;
+    border: 2px solid #BBC1DA;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-content: center;
+}
+
+.task-bar__task__checkbox-off .svg-ok path{
+    fill:none;
+}
+
+.task-bar__task__checkbox-off:hover .svg-ok path{
+    fill:#A5A5A5;
+}
+
+.task-bar__task__checkbox-off__complete .svg-ok path{
+    fill:#364FFB;
+}
+
+.task-bar__task__checkbox-off__complete:hover .svg-ok path{
+    fill:#364FFB;
+}
+
+.task-bar__task__text {
+    margin-right: 8px;
+    margin-top: 3px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    *word-break: break-all;
+    word-break: break-word;
+}
+
+.task-bar__task__text__complete{
+    text-decoration: line-through;
+    color: #A5A5A5;
+}
+
+.task-bar__task__checkbox-off:hover{
+    width: 24px;
+    height: 24px;
+    border: 2px solid #BBC1DA;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-left: 8px;
+}
+
+.task-bar__task__box__remove{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-bar__task__remove{
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+}
+
+.task-bar__task__whats-next{
+    cursor: text;
+    text-align: left;
+    letter-spacing: 0.02em;
+    color: #A5A5A5;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 29px;
+    padding-right: 29px;
+    margin-left: 30px;
+    fill: #A5A5A5;
+}
+
+.task-bar__task__whats-next:hover{
+    color: #252526;
+    fill:#252526;
+}
+.svg-ok{
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+.left-task-item{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.task-bar__task__box_checkbox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container__all-done{
+    display: flex;
+    height: 80%;
+    justify-content:space-between;
+    flex-direction: column;
+}
+
+.container__all-done__show{
+    visibility: hidden;
+    height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.all-done-text{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 16px;
+    margin-top: 18px;
+    text-align: center;
+}
+
+.all-done-text__gray-text{
+    font-weight: normal;
+    font-size: 15px;
+    color: #A5A5A5;
+    margin-top: 12px;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.line{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 1px;
+    border: 1px solid #E9E9E9;
+    margin-bottom: 5%;
+    margin-top: 10px;
+}
+
+.line__show{
+    margin: 0;
+    height: 0;
+}
+
+.container__start-day{
+    display: flex;
+    height: 80%;
+    justify-content:space-between;
+    flex-direction: column;
+}
+
+.container__start-day__show{
+    visibility: hidden;
+    height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.all-done{
+    padding-bottom: 20px;
+}
+
+.new-done{
+    padding-bottom: 5%;
+}
+
+.selected{
+    border: 3px solid #364FFB;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
