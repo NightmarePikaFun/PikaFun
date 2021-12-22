@@ -79,90 +79,130 @@ const ButtonDiv = styled.div`
   margin-top: 28px;
 `
 
-export default function MyPolls() {
-  const [polls, setPolls] = useState(null)
-    useEffect(() => {api.getPolls().then((data) => setPolls(data.polls)).then(console.log("-"))
-  }, [])
-  if (!polls) {
-    return <Spinner margin="70px auto"/>
-  }
+export default class MyPolls extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state={
+            polls: [],
+            test: [],
+            value: 0
+        }
+    }
 
-    function abs() {
-        useEffect(() => {api.getPolls().then((data) => setPolls(data.polls)).then(console.log("-"))
-        }, [])
+    componentDidMount() {
+        api.getPolls().then((data) => data.json().then((data)=>this.setState({polls: data,test:[]})))
     }
-    let kb = 0
-    let output
-    console.log("+")
-  console.log(polls)
-    let newPolls = []
-    polls.map(({id,letters, question,createdAt, votes})=> {
-        let data = createdAt.split('T')
-        data = data[0].split('-')
-        data = data[2]
-        if(data>31)
-        {
-            data = (data/31)+" months"
-        }
-        else
-        {
-            data = data+" days"
-        }
-        let miniPoll = {
-            id: id,
-            letters: letters,
-            question: question,
-            data: data,
-            votes: votes,
-            link: id,
-            reload: abs
-        };
-        newPolls.push(miniPoll);
-    })
-    if(polls.length==0)
-    {
-        let text = "There is no created polls yet. Create a poll and and share a link with anyone and gather votes in seconds."
-        let buttonText = "Create a new poll"
-        return (
-            <>
-                <Header>
-                    <H2>Your Polls</H2>
-                    <Link href="/new"><NewPollButton>New poll</NewPollButton></Link>
-                </Header>
-                <Wrapper>
-                    <Text maxWidth={560}>{text}</Text>
-                    <ButtonDiv>
-                        <Link href="/new">
-                    <Button>
-                        {buttonText}
-                    </Button>
-                        </Link>
-                    </ButtonDiv>
-                </Wrapper>
-            </>
-        )
+    Delete(id){
+        console.log('Del')
+        api.deletePoll(id).then((data)=>this.componentDidMount()).then(()=>this.render())
+
     }
-    else
-    {
-  return (
-    <>
-      <Header>
-        <H2>Your Polls</H2>
-          <Link href="/new"><NewPollButton>New poll</NewPollButton></Link>
-      </Header>
-      <PollList>
-        {newPolls.map(({id, letters, question,data, votes,link, reload}) => (
-          <PollListItem
-            key={id}
-            letters={letters}
-            question={question}
-            votes={votes}
-            days={data}
-            link={link}
-            reload = {reload}
-          />
-        ))}
-      </PollList>
-    </>
-  )}
+
+
+    returnVal() {
+        let asd=[]
+        console.log("step 1")
+        asd = this.state.polls.polls
+        if(this.state.test.length==0) {
+            if(asd!=undefined) {
+                console.log('test fill')
+                this.setState({test: asd})
+            }
+        }
+        console.log(asd!=undefined)
+        if(asd==undefined)
+        {
+            if(this.state.test.length>0) {
+                console.log('test applied')
+                asd = this.state.test
+            }
+        }
+        let newPolls = []
+        if(asd!=undefined) {
+            console.log("step 2")
+            console.log(asd)
+            console.log(asd[0])
+            asd.forEach((tip) => {
+                let dataDay = tip.createdAt.split('T')
+                dataDay = dataDay[0].split('-')
+                dataDay = dataDay[2]
+                if (dataDay > 31) {
+                    dataDay = (dataDay / 31) + " months"
+                } else {
+                    dataDay = dataDay + " days"
+                }
+                let miniPoll = {
+                    id: tip.id,
+                    letters: tip.letters,
+                    question: tip.question,
+                    data: dataDay,
+                    votes: tip.votes,
+                    link: tip.id
+                };
+                newPolls.push(miniPoll);
+            })
+            if (asd.length == 0) {
+                console.log("step 3")
+                console.log(this.state.poll)
+                console.log("parser")
+                let text = "There is no created polls yet. Create a poll and and share a link with anyone and gather votes in seconds."
+                let buttonText = "Create a new poll"
+                return (
+                    <>
+                        <Header>
+                            <H2>Your Polls</H2>
+                            <Link href="/new"><NewPollButton>New poll</NewPollButton></Link>
+                        </Header>
+                        <Wrapper>
+                            <Text maxWidth={560}>{text}</Text>
+                            <ButtonDiv>
+                                <Link href="/new">
+                                    <Button>
+                                        {buttonText}
+                                    </Button>
+                                </Link>
+                            </ButtonDiv>
+                        </Wrapper>
+                    </>
+                )
+            } else {
+                console.log("step 4")
+                console.log(asd.length + "l")
+                return (
+                    <>
+                        <Header>
+                            <H2>Your Polls</H2>
+                            <Link href="/new"><NewPollButton>New poll</NewPollButton></Link>
+                        </Header>
+                        <PollList>
+                            {newPolls.map(({id, letters, question, data, votes, link}) => (
+                                <PollListItem
+                                    key={id}
+                                    letters={letters}
+                                    question={question}
+                                    votes={votes}
+                                    days={data}
+                                    link={link}
+                                    reload={(val) => {
+                                        this.setState(
+                                            {test: asd.filter((x) => {console.log(x.id!==val);this.Delete(val); return x.id !== val})}
+                                        )
+                                    }}
+                                />
+                            ))}
+                        </PollList>
+                    </>
+                )
+            }
+        }
+        return <div/>
+    }
+
+    render(){
+        let kop = this.returnVal()
+        console.log('step render')
+        console.log(this.state.test)
+        return kop
+    }
+
 }

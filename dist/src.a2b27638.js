@@ -33027,9 +33027,8 @@ var _localstore = require("./localstore");
 var BASE_URI = "http://206.81.21.110/api/v1";
 
 function getPolls() {
-  var _getStoredStateOrDefa = (0, _localstore.getStoredStateOrDefault)(),
-      token = _getStoredStateOrDefa.token;
-
+  //const { token } = getStoredStateOrDefault()
+  var token = "50e00914-7179-42f8-8c73-24c297efc204";
   var params = {
     method: 'GET',
     headers: {
@@ -33039,13 +33038,14 @@ function getPolls() {
     }
   };
   return fetch("".concat(BASE_URI, "/polls"), params).then(function (res) {
-    return res.json();
+    //res.json().then((x)=>{console.log(x));
+    return res;
   });
 }
 
 function getItem(id) {
-  var _getStoredStateOrDefa2 = (0, _localstore.getStoredStateOrDefault)(),
-      token = _getStoredStateOrDefa2.token;
+  var _getStoredStateOrDefa = (0, _localstore.getStoredStateOrDefault)(),
+      token = _getStoredStateOrDefa.token;
 
   var options = {
     method: 'GET',
@@ -33060,8 +33060,8 @@ function getItem(id) {
 }
 
 function voteForPoll(id, selectedOption) {
-  var _getStoredStateOrDefa3 = (0, _localstore.getStoredStateOrDefault)(),
-      token = _getStoredStateOrDefa3.token;
+  var _getStoredStateOrDefa2 = (0, _localstore.getStoredStateOrDefault)(),
+      token = _getStoredStateOrDefa2.token;
 
   var options = {
     method: 'POST',
@@ -33078,9 +33078,8 @@ function voteForPoll(id, selectedOption) {
 }
 
 function deletePoll(id) {
-  var _getStoredStateOrDefa4 = (0, _localstore.getStoredStateOrDefault)(),
-      token = _getStoredStateOrDefa4.token;
-
+  //const {token} = getStoredStateOrDefault();
+  var token = "50e00914-7179-42f8-8c73-24c297efc204";
   var options = {
     method: 'DELETE',
     headers: {
@@ -33088,9 +33087,17 @@ function deletePoll(id) {
     }
   };
   console.log("fetchDelId " + id);
-  return fetch("".concat(BASE_URI, "/poll/").concat(id), options).then(function (res) {
-    return res.json();
-  });
+
+  try {
+    return fetch("".concat(BASE_URI, "/poll/").concat(id), options).then(function (res) {
+      return res.json();
+    });
+  } catch (_unused) {
+    console.log(":(");
+    return [];
+  }
+
+  ;
 }
 
 var _default = {
@@ -41239,7 +41246,7 @@ var Container = _styledComponents.default.div(_templateObject10());
 function Delete(id, refresh) {
   console.log('Del');
 
-  _api.default.deletePoll(id).then(document.location.href = "/"); //document.location.href = "/")////)
+  _api.default.deletePoll(id); //.then(document.location.href = "/")//document.location.href = "/")////)
   //window.location.href("/");
 
 }
@@ -41269,7 +41276,7 @@ var PollListItemObj = function PollListItemObj(_ref) {
     fill: "#BFCCE0"
   })), /*#__PURE__*/_react.default.createElement(IconTrash, {
     onClick: function onClick() {
-      Delete(link, reload);
+      return reload(link);
     },
     width: "20",
     height: "20",
@@ -43302,7 +43309,7 @@ function consoleAssert(expression) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = MyPolls;
+exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -43330,17 +43337,27 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _templateObject7() {
   var data = _taggedTemplateLiteral(["\n    max-width: 200px;\n  margin-top: 28px;\n"]);
@@ -43430,98 +43447,171 @@ var Text = _styledComponents.default.div(_templateObject6(), _typo.default.body1
 
 var ButtonDiv = _styledComponents.default.div(_templateObject7());
 
-function MyPolls() {
-  var _useState = (0, _react.useState)(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      polls = _useState2[0],
-      setPolls = _useState2[1];
+var MyPolls = /*#__PURE__*/function (_React$Component) {
+  _inherits(MyPolls, _React$Component);
 
-  (0, _react.useEffect)(function () {
-    _api.default.getPolls().then(function (data) {
-      return setPolls(data.polls);
-    }).then(console.log("-"));
-  }, []);
+  var _super = _createSuper(MyPolls);
 
-  if (!polls) {
-    return /*#__PURE__*/_react.default.createElement(_Spinner.default, {
-      margin: "70px auto"
-    });
-  }
+  function MyPolls(props) {
+    var _this;
 
-  function abs() {
-    (0, _react.useEffect)(function () {
-      _api.default.getPolls().then(function (data) {
-        return setPolls(data.polls);
-      }).then(console.log("-"));
-    }, []);
-  }
+    _classCallCheck(this, MyPolls);
 
-  var kb = 0;
-  var output;
-  console.log("+");
-  console.log(polls);
-  var newPolls = [];
-  polls.map(function (_ref) {
-    var id = _ref.id,
-        letters = _ref.letters,
-        question = _ref.question,
-        createdAt = _ref.createdAt,
-        votes = _ref.votes;
-    var data = createdAt.split('T');
-    data = data[0].split('-');
-    data = data[2];
-
-    if (data > 31) {
-      data = data / 31 + " months";
-    } else {
-      data = data + " days";
-    }
-
-    var miniPoll = {
-      id: id,
-      letters: letters,
-      question: question,
-      data: data,
-      votes: votes,
-      link: id,
-      reload: abs
+    _this = _super.call(this, props);
+    _this.state = {
+      polls: [],
+      test: [],
+      value: 0
     };
-    newPolls.push(miniPoll);
-  });
-
-  if (polls.length == 0) {
-    var text = "There is no created polls yet. Create a poll and and share a link with anyone and gather votes in seconds.";
-    var buttonText = "Create a new poll";
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Header, null, /*#__PURE__*/_react.default.createElement(H2, null, "Your Polls"), /*#__PURE__*/_react.default.createElement(_wouter.Link, {
-      href: "/new"
-    }, /*#__PURE__*/_react.default.createElement(NewPollButton, null, "New poll"))), /*#__PURE__*/_react.default.createElement(Wrapper, null, /*#__PURE__*/_react.default.createElement(Text, {
-      maxWidth: 560
-    }, text), /*#__PURE__*/_react.default.createElement(ButtonDiv, null, /*#__PURE__*/_react.default.createElement(_wouter.Link, {
-      href: "/new"
-    }, /*#__PURE__*/_react.default.createElement(_Button.default, null, buttonText)))));
-  } else {
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Header, null, /*#__PURE__*/_react.default.createElement(H2, null, "Your Polls"), /*#__PURE__*/_react.default.createElement(_wouter.Link, {
-      href: "/new"
-    }, /*#__PURE__*/_react.default.createElement(NewPollButton, null, "New poll"))), /*#__PURE__*/_react.default.createElement(PollList, null, newPolls.map(function (_ref2) {
-      var id = _ref2.id,
-          letters = _ref2.letters,
-          question = _ref2.question,
-          data = _ref2.data,
-          votes = _ref2.votes,
-          link = _ref2.link,
-          reload = _ref2.reload;
-      return /*#__PURE__*/_react.default.createElement(_PollListItem.default, {
-        key: id,
-        letters: letters,
-        question: question,
-        votes: votes,
-        days: data,
-        link: link,
-        reload: reload
-      });
-    })));
+    return _this;
   }
-}
+
+  _createClass(MyPolls, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _api.default.getPolls().then(function (data) {
+        return data.json().then(function (data) {
+          return _this2.setState({
+            polls: data,
+            test: []
+          });
+        });
+      });
+    }
+  }, {
+    key: "Delete",
+    value: function Delete(id) {
+      var _this3 = this;
+
+      console.log('Del');
+
+      _api.default.deletePoll(id).then(function (data) {
+        return _this3.componentDidMount();
+      }).then(function () {
+        return _this3.render();
+      });
+    }
+  }, {
+    key: "returnVal",
+    value: function returnVal() {
+      var _this4 = this;
+
+      var asd = [];
+      console.log("step 1");
+      asd = this.state.polls.polls;
+
+      if (this.state.test.length == 0) {
+        if (asd != undefined) {
+          console.log('test fill');
+          this.setState({
+            test: asd
+          });
+        }
+      }
+
+      console.log(asd != undefined);
+
+      if (asd == undefined) {
+        if (this.state.test.length > 0) {
+          console.log('test applied');
+          asd = this.state.test;
+        }
+      }
+
+      var newPolls = [];
+
+      if (asd != undefined) {
+        console.log("step 2");
+        console.log(asd);
+        console.log(asd[0]);
+        asd.forEach(function (tip) {
+          var dataDay = tip.createdAt.split('T');
+          dataDay = dataDay[0].split('-');
+          dataDay = dataDay[2];
+
+          if (dataDay > 31) {
+            dataDay = dataDay / 31 + " months";
+          } else {
+            dataDay = dataDay + " days";
+          }
+
+          var miniPoll = {
+            id: tip.id,
+            letters: tip.letters,
+            question: tip.question,
+            data: dataDay,
+            votes: tip.votes,
+            link: tip.id
+          };
+          newPolls.push(miniPoll);
+        });
+
+        if (asd.length == 0) {
+          console.log("step 3");
+          console.log(this.state.poll);
+          console.log("parser");
+          var text = "There is no created polls yet. Create a poll and and share a link with anyone and gather votes in seconds.";
+          var buttonText = "Create a new poll";
+          return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Header, null, /*#__PURE__*/_react.default.createElement(H2, null, "Your Polls"), /*#__PURE__*/_react.default.createElement(_wouter.Link, {
+            href: "/new"
+          }, /*#__PURE__*/_react.default.createElement(NewPollButton, null, "New poll"))), /*#__PURE__*/_react.default.createElement(Wrapper, null, /*#__PURE__*/_react.default.createElement(Text, {
+            maxWidth: 560
+          }, text), /*#__PURE__*/_react.default.createElement(ButtonDiv, null, /*#__PURE__*/_react.default.createElement(_wouter.Link, {
+            href: "/new"
+          }, /*#__PURE__*/_react.default.createElement(_Button.default, null, buttonText)))));
+        } else {
+          console.log("step 4");
+          console.log(asd.length + "l");
+          return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(Header, null, /*#__PURE__*/_react.default.createElement(H2, null, "Your Polls"), /*#__PURE__*/_react.default.createElement(_wouter.Link, {
+            href: "/new"
+          }, /*#__PURE__*/_react.default.createElement(NewPollButton, null, "New poll"))), /*#__PURE__*/_react.default.createElement(PollList, null, newPolls.map(function (_ref) {
+            var id = _ref.id,
+                letters = _ref.letters,
+                question = _ref.question,
+                data = _ref.data,
+                votes = _ref.votes,
+                link = _ref.link;
+            return /*#__PURE__*/_react.default.createElement(_PollListItem.default, {
+              key: id,
+              letters: letters,
+              question: question,
+              votes: votes,
+              days: data,
+              link: link,
+              reload: function reload(val) {
+                _this4.setState({
+                  test: asd.filter(function (x) {
+                    console.log(x.id !== val);
+
+                    _this4.Delete(val);
+
+                    return x.id !== val;
+                  })
+                });
+              }
+            });
+          })));
+        }
+      }
+
+      return /*#__PURE__*/_react.default.createElement("div", null);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var kop = this.returnVal();
+      console.log('step render');
+      console.log(this.state.test);
+      return kop;
+    }
+  }]);
+
+  return MyPolls;
+}(_react.default.Component);
+
+exports.default = MyPolls;
 },{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","wouter":"node_modules/wouter/index.js","../components/Spinner":"src/components/Spinner.jsx","../components/Button":"src/components/Button.jsx","../components/PollListItem":"src/components/PollListItem.jsx","../api":"src/api.js","../colors":"src/colors.js","../typo":"src/typo.js","console":"node_modules/console-browserify/index.js"}],"src/components/WidgetWithTitle.jsx":[function(require,module,exports) {
 "use strict";
 
@@ -44395,7 +44485,7 @@ exports.default = Option;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = CreatePoll;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -44525,47 +44615,48 @@ var ButtonDiv = _styledComponents.default.div(_templateObject6());
 
 var Thrash = _styledComponents.default.svg(_templateObject7());
 
-var NewPoll = /*#__PURE__*/function (_React$Component) {
-  _inherits(NewPoll, _React$Component);
+var NewPollS = /*#__PURE__*/function (_React$Component) {
+  _inherits(NewPollS, _React$Component);
 
-  var _super = _createSuper(NewPoll);
+  var _super = _createSuper(NewPollS);
 
-  function NewPoll(props) {
+  function NewPollS(props) {
     var _this;
 
-    _classCallCheck(this, NewPoll);
+    _classCallCheck(this, NewPollS);
 
     _this = _super.call(this, props);
     _this.state = {
       number: 1,
       smallD: []
-    };
-    _this.AddDivchik = _this.AddDivchik.bind(_assertThisInitialized(_this));
+    }; //this.AddDivchik = this.AddDivchik.bind(this);
+
     return _this;
   }
 
-  _createClass(NewPoll, [{
+  _createClass(NewPollS, [{
     key: "CreateDivchik",
     value: function CreateDivchik() {
-      if (this.state.smallD.length < 0) {
+      var num = this.state.number;
+
+      if (num === 1) {
         var arr = [];
-        var num = 1;
-        arr.push( /*#__PURE__*/_react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(_Option.default, {
-          placeholder: "Eg.Option " + num,
-          labelText: "Option " + num
-        })));
+        var placeText = "Eg.Option " + num - 1;
+        var labelText = "Option " + num - 1;
+        var miniText = {
+          placeholder: {
+            placeText: placeText
+          },
+          label: {
+            labelText: labelText
+          }
+        };
+        arr.push(miniText);
         num += 1;
-        arr.push( /*#__PURE__*/_react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(_Option.default, {
-          placeholder: "Eg.Option " + num,
-          labelText: "Option " + num
-        })));
         this.setState({
-          smallD: arr
-        });
-        this.setState({
+          smallD: arr,
           number: num
         });
-        this.render();
       }
     }
   }, {
@@ -44575,36 +44666,56 @@ var NewPoll = /*#__PURE__*/function (_React$Component) {
       var arr = this.state.smallD;
       var num = this.state.number;
       num += 1;
-      arr.push( /*#__PURE__*/_react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(_Option.default, {
-        placeholder: "Eg.Option " + num,
-        labelText: "Option " + num
-      })));
+      var placeText = "Eg.Option " + num - 1;
+      var labelText = "Option " + num - 1;
+      var miniText = {
+        placeholder: {
+          placeText: placeText
+        },
+        label: {
+          labelText: labelText
+        }
+      };
+      arr.push(miniText);
       this.setState({
-        smallD: arr
-      });
-      this.setState({
+        smallD: arr,
         number: num
-      });
-      this.render();
+      }); //this.setState({})
+
+      console.log("compl");
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       this.CreateDivchik();
-      return /*#__PURE__*/_react.default.createElement(BigDivchik, null, /*#__PURE__*/_react.default.createElement(_WidgetWithTitle.default, {
+      var state = this.state.smallD;
+      console.log(state);
+      return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(BigDivchik, null, /*#__PURE__*/_react.default.createElement(_WidgetWithTitle.default, {
         header: "New Poll",
         text: "To start a poll just share a link on them with your friends. Once you have one vote it can't be edited anymore.",
         maxWidth: "520px"
-      }, /*#__PURE__*/_react.default.createElement(PollListItemContainer, null, /*#__PURE__*/_react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(Label, null, "Poll question"), /*#__PURE__*/_react.default.createElement(_Input.default, null)), this.state.smallD, /*#__PURE__*/_react.default.createElement(SmallDivchik, {
-        onClick: this.AddDivchik
-      }, /*#__PURE__*/_react.default.createElement(Label, null, "+ Add another option")))), /*#__PURE__*/_react.default.createElement(ButtonDiv, null, /*#__PURE__*/_react.default.createElement(_Button.default, null, "Create poll")));
+      }, /*#__PURE__*/_react.default.createElement(PollListItemContainer, null, /*#__PURE__*/_react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(Label, null, "Poll question"), /*#__PURE__*/_react.default.createElement(_Input.default, null)), state.map(function (placeholder, label) {
+        /*#__PURE__*/
+        _react.default.createElement(SmallDivchik, null, /*#__PURE__*/_react.default.createElement(_Option.default, {
+          placeholder: placeholder,
+          labelText: label
+        }));
+      }), /*#__PURE__*/_react.default.createElement(SmallDivchik, {
+        onClick: function onClick() {
+          return _this2.AddDivchik();
+        }
+      }, /*#__PURE__*/_react.default.createElement(Label, null, "+ Add another option")))), /*#__PURE__*/_react.default.createElement(ButtonDiv, null, /*#__PURE__*/_react.default.createElement(_Button.default, null, "Create poll"))));
     }
   }]);
 
-  return NewPoll;
+  return NewPollS;
 }(_react.default.Component);
 
-exports.default = NewPoll;
+function CreatePoll() {
+  return /*#__PURE__*/_react.default.createElement(NewPollS, null);
+}
 },{"react":"node_modules/react/index.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js","../components/WidgetWithTitle":"src/components/WidgetWithTitle.jsx","../colors":"src/colors.js","../typo":"src/typo.js","../components/Input":"src/components/Input.jsx","../components/Button":"src/components/Button.jsx","../components/Option":"src/components/Option.jsx","../components/OptionLine":"src/components/OptionLine.jsx"}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -44729,7 +44840,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63011" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65154" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

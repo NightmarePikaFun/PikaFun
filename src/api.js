@@ -3,8 +3,9 @@ import {getStoredStateOrDefault} from './localstore'
 const BASE_URI = "http://206.81.21.110/api/v1"
 
 function getPolls() {
-  const { token } = getStoredStateOrDefault()
-  const params = {  
+  //const { token } = getStoredStateOrDefault()
+  const token = "50e00914-7179-42f8-8c73-24c297efc204"
+  const params = {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -15,7 +16,8 @@ function getPolls() {
 
   return fetch(`${BASE_URI}/polls`, params)  
     .then(function(res) {
-      return res.json();
+      //res.json().then((x)=>{console.log(x));
+      return res;
     })
     
 }
@@ -49,7 +51,8 @@ function voteForPoll(id, selectedOption) {
 }
 
 function deletePoll(id) {
-  const {token} = getStoredStateOrDefault();
+  //const {token} = getStoredStateOrDefault();
+  const token = "50e00914-7179-42f8-8c73-24c297efc204"
   const options = {
     method: 'DELETE',
     headers: {
@@ -57,7 +60,13 @@ function deletePoll(id) {
     },
   };
   console.log("fetchDelId "+id)
-  return fetch(`${BASE_URI}/poll/${id}`, options).then((res) => res.json());
+  try {
+    return fetch(`${BASE_URI}/poll/${id}`, options).then((res) => res.json())
+  }
+  catch {
+    console.log(":(")
+    return []
+  };
 }
 
 export default {

@@ -56,30 +56,29 @@ const Thrash = styled.svg`
 `
 
 
-export default class NewPoll extends React.Component {
+class NewPollS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             number: 1,
             smallD: []
         };
-        this.AddDivchik = this.AddDivchik.bind(this);
+        //this.AddDivchik = this.AddDivchik.bind(this);
     }
 
     CreateDivchik(){
-        if(this.state.smallD.length<0) {
+        let num = this.state.number
+        if(num===1) {
             let arr = []
-            let num = 1
-            arr.push(<SmallDivchik>
-                <Option placeholder={"Eg.Option " + num} labelText={"Option " + num}/>
-            </SmallDivchik>);
+            let placeText = "Eg.Option "+num-1
+            let labelText = "Option "+num-1
+            let miniText = {
+                placeholder: {placeText},
+                label: {labelText}
+            }
+            arr.push(miniText);
             num += 1
-            arr.push(<SmallDivchik>
-                <Option placeholder={"Eg.Option " + num} labelText={"Option " + num}/>
-            </SmallDivchik>)
-            this.setState({smallD: arr})
-            this.setState({number: num})
-            this.render();
+            this.setState({smallD: arr,number: num})
         }
     }
 
@@ -88,18 +87,23 @@ export default class NewPoll extends React.Component {
         let arr = this.state.smallD
         let num = this.state.number
         num+=1
-        arr.push(<SmallDivchik>
-            <Option placeholder={"Eg.Option "+num} labelText={"Option "+num}/>
-        </SmallDivchik>)
-        this.setState({smallD: arr})
-        this.setState({number:num})
-        this.render();
+        let placeText = "Eg.Option "+num-1
+        let labelText = "Option "+num-1
+        let miniText = {
+            placeholder: {placeText},
+            label: {labelText}
+        }
+        arr.push(miniText)
+        this.setState({smallD: arr,number:num})
+        //this.setState({})
+        console.log("compl")
     }
-
 
     render() {
         this.CreateDivchik();
-        return (
+        let state = this.state.smallD
+        console.log(state)
+        return <>
             <BigDivchik>
                 <WidgetWithTitle
                     header="New Poll"
@@ -111,14 +115,22 @@ export default class NewPoll extends React.Component {
                             <Label>Poll question</Label>
                             <Input/>
                         </SmallDivchik>
-                        {this.state.smallD}
-                        <SmallDivchik onClick={this.AddDivchik}>
+                        {state.map((placeholder, label)=>{
+                            <SmallDivchik>
+                                <Option placeholder={placeholder} labelText={label}/>
+                            </SmallDivchik>
+                        })}
+                        <SmallDivchik onClick={()=>this.AddDivchik()}>
                             <Label>+ Add another option</Label>
                         </SmallDivchik>
                     </PollListItemContainer>
                 </WidgetWithTitle>
                 <ButtonDiv><Button>Create poll</Button></ButtonDiv>
             </BigDivchik>
-        )
+        </>
     }
+}
+
+export default function CreatePoll(){
+    return <NewPollS></NewPollS>
 }

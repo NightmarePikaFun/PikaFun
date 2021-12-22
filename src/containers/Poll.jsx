@@ -16,8 +16,6 @@ const ButtonDiv = styled.div`
   margin-top: 42px;
 `
 
-
-
 const BigDivchik = styled.div`
   display: flex;
   flex-direction: column;
@@ -102,9 +100,9 @@ export default function Poll({params}) {
             ))}
         </WidgetWithTitle>
       </BigDivchik>
-          <ButtonDiv onClick={()=>voteVote(key,selectId)}>
-              {knopa}
-          </ButtonDiv>
+              <ButtonDiv onClick={()=>voteVote(key,selectId)}>
+                  {knopa}
+              </ButtonDiv>
       </>
       //TODO Взять хук из апи и добавить отрисовкой сюды
   )
